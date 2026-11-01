@@ -18,3 +18,4 @@ export const AI_MODEL_CONFIG = {
   topP: 0.95,
   maxOutputTokens: 8192,
 };
+

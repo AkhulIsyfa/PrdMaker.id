@@ -15,3 +15,4 @@ router.get('/jobs', adminController.listJobs.bind(adminController));
 router.get('/metrics', adminController.getMetrics.bind(adminController));
 
 export default router;
+
