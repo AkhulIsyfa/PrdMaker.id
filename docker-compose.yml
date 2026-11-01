@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: makeprd_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-makeprd}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-makeprd_secret}
+      POSTGRES_DB: ${POSTGRES_DB:-makeprd_db}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-makeprd} -d ${POSTGRES_DB:-makeprd_db}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - makeprd_network
+
+networks:
+  makeprd_network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+    driver: local
+
