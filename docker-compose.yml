@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   postgres:
     image: postgres:16-alpine
@@ -10,7 +8,7 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-makeprd_secret}
       POSTGRES_DB: ${POSTGRES_DB:-makeprd_db}
     ports:
-      - "${POSTGRES_PORT:-5432}:5432"
+      - "${POSTGRES_PORT:-5434}:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
@@ -21,6 +19,48 @@ services:
     networks:
       - makeprd_network
 
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: makeprd_backend
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      PORT: 5000
+      CORS_ORIGIN: ${CORS_ORIGIN:-http://localhost:8080}
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: ${POSTGRES_USER:-makeprd}
+      DB_PASSWORD: ${POSTGRES_PASSWORD:-makeprd_secret}
+      DB_NAME: ${POSTGRES_DB:-makeprd_db}
+      DB_POOL_MIN: 2
+      DB_POOL_MAX: 10
+      JWT_SECRET: ${JWT_SECRET:-makeprd_jwt_super_secret_key_minimum_32_characters_for_security}
+      JWT_EXPIRES_IN: 7d
+      CSRF_SECRET: ${CSRF_SECRET:-makeprd_csrf_secret_salt_token_generator_key_32_chars}
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+    ports:
+      - "${BACKEND_PORT:-5000}:5000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - makeprd_network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: makeprd_frontend
+    restart: unless-stopped
+    ports:
+      - "${FRONTEND_PORT:-8080}:80"
+    depends_on:
+      - backend
+    networks:
+      - makeprd_network
+
 networks:
   makeprd_network:
     driver: bridge
@@ -28,4 +68,3 @@ networks:
 volumes:
   postgres_data:
     driver: local
-
