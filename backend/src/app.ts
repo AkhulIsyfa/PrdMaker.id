@@ -7,6 +7,8 @@ import {
 } from './middlewares/security.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import authRoutes from './routes/authRoutes.js';
+import documentRoutes from './routes/documentRoutes.js';
+import adminRoutes from './routes/adminRoutes.js';
 
 const app = express();
 
@@ -31,11 +33,12 @@ app.get('/health', (_req, expressRes) => {
   });
 });
 
-// API Routes
+// API Routes (v1)
 app.use('/api/v1/auth', authRoutes);
+app.use('/api/v1/documents', documentRoutes);
+app.use('/api/v1/admin', adminRoutes);
 
 // Centralized Error Handling
 app.use(errorHandler);
 
 export default app;
-

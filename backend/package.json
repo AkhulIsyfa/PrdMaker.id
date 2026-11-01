@@ -8,7 +8,7 @@
     "dev": "tsx watch src/server.ts",
     "build": "tsc",
     "start": "node dist/server.js",
-    "test": "tsx tests/phase1_3.test.ts",
+    "test": "tsx tests/phase1_3.test.ts && tsx tests/phase4_5.test.ts",
     "migrate:make": "knex --knexfile src/config/knexfile.ts migrate:make -x ts",
     "migrate:latest": "knex --knexfile src/config/knexfile.ts migrate:latest",
     "migrate:rollback": "knex --knexfile src/config/knexfile.ts migrate:rollback",
