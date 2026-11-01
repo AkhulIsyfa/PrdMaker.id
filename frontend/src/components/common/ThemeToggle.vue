@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Sun, Moon } from 'lucide-vue-next';
-import { useThemeStore } from '../../stores/theme.js';
+import { useThemeStore } from '../../stores/theme';
 
 const themeStore = useThemeStore();
 </script>

@@ -23,18 +23,23 @@ body {
 
 /* Typography scale according to ui_components.md */
 h1 {
-  @apply text-[32px] font-bold leading-tight;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.25;
 }
 
 h2 {
-  @apply text-[24px] font-semibold leading-snug;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.35;
 }
 
-p, span, div {
-  @apply text-[16px] leading-[1.5];
+p {
+  font-size: 16px;
+  line-height: 1.5;
 }
 
 .caption {
-  @apply text-[12px] leading-normal;
+  font-size: 12px;
+  line-height: 1.4;
 }
-

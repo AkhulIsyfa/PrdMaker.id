@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
-import { authApi } from '../api/client.js';
+import { authApi } from '../api/client';
 
 export interface User {
   id: string;

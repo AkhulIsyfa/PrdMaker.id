@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
-import { documentApi } from '../api/client.js';
+import { documentApi } from '../api/client';
 
 export interface DocumentTemplate {
   id: string;

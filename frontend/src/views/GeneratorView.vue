@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
-import { useDocumentStore } from '../stores/document.js';
+import { useDocumentStore } from '../stores/document';
 
 const documentStore = useDocumentStore();
 
